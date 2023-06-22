@@ -4,7 +4,6 @@
       <v-text-field
         v-model="searchItem"
         label="Search for a package"
-        @input="searchData"
         clearable
         class="search-field"
       ></v-text-field>
@@ -26,15 +25,21 @@ export default {
     ...mapActions(['searchPackages']),
     ...mapMutations(['setPackageName', 'clearPackages']),
     searchData() {
-      if (this.searchItem === '') {
-        this.clearPackages();
-        clearTimeout(this.searchTimeout);
-      } else {
         clearTimeout(this.searchTimeout);
         this.searchTimeout = setTimeout(() => {
           this.searchPackages(this.searchItem);
           this.setPackageName(this.searchItem);
         }, 1000);
+    }
+  },
+  watch: {
+    searchItem(newSearchItem) {
+      if (newSearchItem) {
+        this.searchData();
+      } else {
+        this.clearPackages();
+        clearTimeout(this.searchTimeout);
+        
       }
     }
   }
