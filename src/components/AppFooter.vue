@@ -19,8 +19,8 @@
     data() {
       return {
         name: 'Oleksandr Batychko',
-        photo: 'path/to/your/photo.jpg',
-        github: 'https://github.com/yourusername'
+        photo: require('@/img/photo.jpg'),
+        github: 'https://github.com/KorvinCW/nethernite.git'
       };
     }
   };

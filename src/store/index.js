@@ -17,6 +17,9 @@ export default new Vuex.Store({
       
       state.packages = sortedArray;
     },
+    clearPackages(state) {
+      state.packages = [];
+    },
     setPackageName(state, packageName) {
       state.packageName = packageName;
     },
@@ -33,7 +36,7 @@ export default new Vuex.Store({
         const response = await fetch(`https://data.jsdelivr.com/v1/packages/npm/${searchPackage}`);
     
         if (!response.ok) {
-          throw new Error('Package not found');
+          throw new Error('There is no such package');
         }
     
         const packageVersions = await response.json();

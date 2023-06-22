@@ -1,10 +1,10 @@
 <template>
   <v-app-bar app>
-    <v-container>
+    <v-container class="headerContainer">
       <v-text-field
         v-model="searchItem"
         label="Search for a package"
-        @input="handleSearch"
+        @input="searchData"
         clearable
         class="search-field"
       ></v-text-field>
@@ -24,22 +24,29 @@ export default {
   },
   methods: {
     ...mapActions(['searchPackages']),
-    ...mapMutations(['setPackageName']),
-    handleSearch() {
-      clearTimeout(this.searchTimeout);
-
-      this.searchTimeout = setTimeout(() => {
-        this.searchPackages(this.searchItem);
-        this.setPackageName(this.searchItem);
-      }, 1000);
+    ...mapMutations(['setPackageName', 'clearPackages']),
+    searchData() {
+      if (this.searchItem === '') {
+        this.clearPackages();
+        clearTimeout(this.searchTimeout);
+      } else {
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(() => {
+          this.searchPackages(this.searchItem);
+          this.setPackageName(this.searchItem);
+        }, 1000);
+      }
     }
   }
 };
 </script>
 
-<style scoped>
-.search-field {
-  max-width: 300px;
+<style lang="scss" scoped>
+.headerContainer {
+  margin-top: 20px;
+  .search-field {
+    max-width: 300px;
+  }
 }
 </style>
 
